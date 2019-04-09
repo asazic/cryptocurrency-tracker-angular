@@ -1,0 +1,56 @@
+<h1>Cryptocurrency Details</h1>
+<button class="btn btn-primary" (click)="refresh()">Refresh</button>
+<div *ngIf="item">
+    {{item.name}}
+    <ul>
+        <li id="rank">
+            Rank: {{item.cmc_rank}}
+        </li>
+
+        <li>
+            Name: {{item.name}}
+        </li>
+
+        <li>
+            Symbol: {{item.symbol}}
+        </li>
+
+        <li>
+            Price_{{fiat}}: {{getFiatProperties(item).price}}
+        </li>
+
+        <li>
+            24h Volume in {{fiat}}: {{getFiatProperties(item).price}}
+        </li>
+
+        <li>
+            Market cap in {{fiat}}: {{getFiatProperties(item).market_cap}}
+        </li>
+
+        <li>
+            Price in Bitcoin: {{getFiatProperties(item, 'BTC').price}}
+        </li>
+
+        <li>
+            1h change in {{fiat}}: {{getFiatProperties(item).percent_change_1h}}
+        </li>
+
+        <li>
+            24h change in {{fiat}}: {{getFiatProperties(item).percent_change_24h}}
+        </li>
+
+        <li>
+            7d change in {{fiat}}: {{getFiatProperties(item).percent_change_7d}}
+        </li>
+        <li>
+            Total supply: {{item.total_supply}}
+        </li>
+        <li>
+            Available supply: {{item.max_supply - item.circulating_supply}}
+        </li>
+    </ul>
+</div>
+<div *ngIf="error$ | async">
+    <h2>No details to show</h2>
+    <h2>{{error$ | async}}</h2>
+</div>

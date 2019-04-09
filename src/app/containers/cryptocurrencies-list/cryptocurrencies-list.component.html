@@ -1,0 +1,19 @@
+<button class="btn btn-primary" (click)="refresh()">Refresh</button>
+<table>
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Symbol</th>
+            <th>Price</th>
+            <th>24h change</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of cryptocurrencies$ | async" [routerLink]="['/cryptocurrency-details/', item.id]">
+            <td>{{item.cmc_rank}}</td>
+            <td>{{item.symbol}}</td>
+            <td>{{getFiatProperties(item).price}} {{fiat}}</td>
+            <td>{{getFiatProperties(item).percent_change_24h}} %</td>
+        </tr>
+    </tbody>
+</table>
