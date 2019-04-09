@@ -11,7 +11,7 @@ import { RootStoreState, FiatCurrencyStoreSelectors, FiatCurrencyStoreActions } 
 export class FiatSelectionComponent implements OnInit {
     public fiatReactiveForm: FormGroup = new FormGroup({
         fiatSelect: new FormControl('USD')
-    })
+    });
     constructor(private store: Store<RootStoreState.State>) { }
 
     public ngOnInit() {

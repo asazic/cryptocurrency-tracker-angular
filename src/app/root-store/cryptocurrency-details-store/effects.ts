@@ -11,7 +11,7 @@ export class CryptocurrencyDetailsEffects {
     constructor(private dataService: CryptocurrenciesService, private actions$: Actions) { }
 
     @Effect()
-    loadRequestEffect$: Observable<Action> = this.actions$.pipe(
+    loadCryptocurrency$: Observable<Action> = this.actions$.pipe(
         ofType<detailsActions.LoadRequestAction>(
             detailsActions.ActionTypes.LOAD_REQUEST
         ),
