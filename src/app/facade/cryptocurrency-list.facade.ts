@@ -9,7 +9,7 @@ import { CryptocurrencyHelper } from '../helpers/cryptocurrency-helper';
 @Injectable()
 export class CryptocurrencyListFacade {
     public isLoading$: Observable<boolean> = this.store.pipe(select(RootStoreSelectors.selectIsLoading));
-    public allCryptocurrencies$: Observable<Cryptocurrency[]> = this.store.pipe(select(CryptocurrencyListStoreSelectors.selectAllCryptocurrencies));
+    public pagedCryptocurrencies$: Observable<Cryptocurrency[]> = this.store.pipe(select(CryptocurrencyListStoreSelectors.selectPagedCryptocurrencies));
     public error$: Observable<string> = this.store.pipe(select(RootStoreSelectors.selectError));
     private fiat: string = 'USD';
 
@@ -27,5 +27,9 @@ export class CryptocurrencyListFacade {
 
     public getFiatProperties(item: Cryptocurrency) {
         return CryptocurrencyHelper.getFiatProperties(item, this.fiat);
+    }
+
+    public setPage(page: number) {
+        this.store.dispatch(new CryptocurrencyListStoreActions.LoadPaged({ page: page }));
     }
 }

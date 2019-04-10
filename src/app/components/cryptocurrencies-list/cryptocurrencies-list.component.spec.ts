@@ -35,7 +35,7 @@ describe('CryptocurrenciesListComponent', () => {
 
     it('should display data', fakeAsync(() => {
         const compile: HTMLElement = fixture.debugElement.nativeElement;
-        listFacade.allCryptocurrencies$ = of([dummyCurrency1, dummyCurrency2]);
+        listFacade.pagedCryptocurrencies$ = of([dummyCurrency1, dummyCurrency2]);
         tick();
         fixture.whenRenderingDone().then(() => {
             const trElements = compile.querySelectorAll('tr');
@@ -45,7 +45,7 @@ describe('CryptocurrenciesListComponent', () => {
 
     it('should display dummycurrency1 as first row', fakeAsync(() => {
         const compile: HTMLElement = fixture.debugElement.nativeElement;
-        listFacade.allCryptocurrencies$ = of([dummyCurrency1, dummyCurrency2]);
+        listFacade.pagedCryptocurrencies$ = of([dummyCurrency1, dummyCurrency2]);
         tick();
         fixture.whenStable().then(() => {
             const trElement = compile.querySelector('tr');

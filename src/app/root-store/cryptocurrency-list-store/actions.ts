@@ -4,7 +4,8 @@ import Cryptocurrency from 'src/app/models/cryptocurrency.model';
 export enum ActionTypes {
     LOAD_REQUEST = '[Cryptocurrency List] Load Request',
     LOAD_FAILURE = '[Cryptocurrency List] Load Failure',
-    LOAD_SUCCESS = '[Cryptocurrency List] Load Success'
+    LOAD_SUCCESS = '[Cryptocurrency List] Load Success',
+    UPDATE_PAGE = '[Cryptocurrency List] Update Page'
 }
 
 export class LoadRequestAction implements Action {
@@ -22,4 +23,9 @@ export class LoadSuccessAction implements Action {
     constructor(public payload: { cryptocurrencies: Cryptocurrency[]}) { }
 }
 
-export type Actions = LoadRequestAction | LoadFailureAction | LoadSuccessAction;
+export class LoadPaged implements Action {
+    readonly type = ActionTypes.UPDATE_PAGE;
+    constructor(public payload: { page: number }) { }
+}
+
+export type Actions = LoadRequestAction | LoadFailureAction | LoadSuccessAction | LoadPaged;

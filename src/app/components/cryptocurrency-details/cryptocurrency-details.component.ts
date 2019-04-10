@@ -12,6 +12,8 @@ import Cryptocurrency, { FiatProperties } from 'src/app/models/cryptocurrency.mo
 export class CryptocurrencyDetailsComponent implements OnInit {
     public item: Cryptocurrency;
     public cryptocurrency$: Observable<Cryptocurrency> = this.cryptoDetailsFacade.cryptocurrency$;
+    public error$: Observable<string> = this.cryptoDetailsFacade.error$;
+    public isLoading$: Observable<boolean> = this.cryptoDetailsFacade.isLoading$;
     public fiat: string = this.cryptoDetailsFacade.fiat;
     private id: number;
     constructor(private cryptoDetailsFacade: CryptocurrencyDetailsFacade,

@@ -24,6 +24,12 @@ export function cryptocurrencyListReducer(state = initialState, action: Actions)
                 error: action.payload.error
             };
         }
+        case ActionTypes.UPDATE_PAGE: {
+            return {
+                ...state,
+                page: action.payload.page
+            }
+        }
         default: {
             return state;
         }

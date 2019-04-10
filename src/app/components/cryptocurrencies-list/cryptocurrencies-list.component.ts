@@ -10,9 +10,10 @@ import { CryptocurrencyListFacade } from 'src/app/facade/cryptocurrency-list.fac
     styleUrls: ['./cryptocurrencies-list.component.css']
 })
 export class CryptocurrenciesListComponent implements OnInit {
-    public cryptocurrencies$: Observable<Cryptocurrency[]> = this.cryptoListFacade.allCryptocurrencies$;
+    public cryptocurrencies$: Observable<Cryptocurrency[]> = this.cryptoListFacade.pagedCryptocurrencies$;
     public error$: Observable<string> = this.cryptoListFacade.error$;
     public isLoading$: Observable<boolean> = this.cryptoListFacade.isLoading$;
+    public currentPage = 1;
     constructor(private cryptoListFacade: CryptocurrencyListFacade) { }
 
     public ngOnInit() {
@@ -25,5 +26,10 @@ export class CryptocurrenciesListComponent implements OnInit {
 
     public getFiatProperties(item: Cryptocurrency): FiatProperties {
         return this.cryptoListFacade.getFiatProperties(item);
+    }
+
+    public page(pageNum: number) {
+        this.currentPage = pageNum;
+        this.cryptoListFacade.setPage(pageNum);
     }
 }

@@ -1,0 +1,12 @@
+tbody tr:hover {
+    cursor: pointer;
+}
+
+.page-item.active .page-link {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #454d55;
+}
+.page-link {
+    color: #212529;
+}
