@@ -9,11 +9,15 @@ export const cryptocurrencyListAdapter: EntityAdapter<
 export interface State extends EntityState<Cryptocurrency> {
     isLoading?: boolean;
     error?: any;
+    page: number;
+    maxPages: number;
 }
 
 export const initialState: State = cryptocurrencyListAdapter.getInitialState(
     {
         isLoading: false,
-        error: null
+        error: null,
+        page: 1,
+        maxPages: 5
     }
 );

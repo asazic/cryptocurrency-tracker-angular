@@ -12,7 +12,16 @@ export class ToolbarComponent implements OnInit {
     public currentFiat$: Observable<string> = this.store.pipe(select(FiatCurrencyStoreSelectors.selectFiat));
     constructor(private store: Store<RootStoreState.State>) { }
 
-    ngOnInit() {
+    public ngOnInit() {
 
+    }
+
+    public toggleNav(): void {
+        const element = document.getElementById('navContent');
+        if(element.classList.contains('show')) {
+            element.classList.remove('show');
+        } else {
+            element.classList.add('show');            
+        }
     }
 }

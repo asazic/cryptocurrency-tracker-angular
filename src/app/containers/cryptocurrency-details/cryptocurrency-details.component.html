@@ -1,56 +1,74 @@
-<h1>Cryptocurrency Details</h1>
-<button class="btn btn-primary" (click)="refresh()">Refresh</button>
-<table *ngIf="item">
-    <tr>
-        <td id="rank">Rank: </td>
-        <td>{{item.cmc_rank}}</td>
-    </tr>
-    <tr>
-        <td>Name: </td>
-        <td>{{item.name}}</td>
-    </tr>
-    <tr>
-        <td>Symbol: </td>
-        <td>{{item.symbol}}</td>
-    </tr>
-    <tr>
-        <td>Price_{{fiat}}: </td>
-        <td>{{getFiatProperties(item).price}}</td>
-    </tr>
-    <tr>
-        <td>24h Volume in {{fiat}}: </td>
-        <td>{{getFiatProperties(item).price}}</td>
-    </tr>
-    <tr>
-        <td>Market cap in {{fiat}}: </td>
-        <td>{{getFiatProperties(item).market_cap}}</td>
-    </tr>
-    <tr>
-        <td>Price in Bitcoin: </td>
-        <td>{{getFiatProperties(item, 'BTC').price}}</td>
-    </tr>
-    <tr>
-        <td>1h change in {{fiat}}: </td>
-        <td>{{getFiatProperties(item).percent_change_1h}}</td>
-    </tr>
-    <tr>
-        <td>24h change in {{fiat}}: </td>
-        <td>{{getFiatProperties(item).percent_change_24h}}</td>
-    </tr>
-    <tr>
-        <td>7d change in {{fiat}}: </td>
-        <td>{{getFiatProperties(item).percent_change_7d}}</td>
-    </tr>
-    <tr>
-        <td>Total supply: </td>
-        <td>{{item.total_supply}}</td>
-    </tr>
-    <tr>
-        <td>Available supply: </td>
-        <td>{{item.max_supply - item.circulating_supply}}</td>
-    </tr>
-</table>
-<div *ngIf="error$ | async">
+<div class="row mt-3">
+    <div class="col-sm-8">
+        <h2 class="float-sm-left">Cryptocurrency Details</h2>
+    </div>
+    <div class="col-sm-4">
+        <button class="btn btn-dark float-sm-right" (click)="refresh()">Refresh</button>
+    </div>
+</div>
+<div class="text-center mt-3" *ngIf="isLoading$ | async">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div class="table-responsive mt-3">
+    <table *ngIf="item && !(error$ | async) && !(isLoading$ | async)" class="table">
+        <tr>
+            <th scope="row" id="rank">Rank: </th>
+            <td>{{item.cmc_rank}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Name: </th>
+            <td>{{item.name}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Symbol: </th>
+            <td>{{item.symbol}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Price_{{fiat}}: </th>
+            <td>{{getFiatProperties(item).price}}</td>
+        </tr>
+        <tr>
+            <th scope="row">24h Volume in {{fiat}}: </th>
+            <td>{{getFiatProperties(item).price}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Market cap in {{fiat}}: </th>
+            <td>{{getFiatProperties(item).market_cap}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Price in Bitcoin: </th>
+            <td>{{getFiatProperties(item, 'BTC').price}}</td>
+        </tr>
+        <tr>
+            <th scope="row">1h change in {{fiat}}: </th>
+            <td>{{getFiatProperties(item).percent_change_1h}}</td>
+        </tr>
+        <tr>
+            <th scope="row">24h change in {{fiat}}: </th>
+            <td>{{getFiatProperties(item).percent_change_24h}}</td>
+        </tr>
+        <tr>
+            <th scope="row">7d change in {{fiat}}: </th>
+            <td>{{getFiatProperties(item).percent_change_7d}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Total supply: </th>
+            <td>{{item.total_supply}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Available supply: </th>
+            <td>{{item.max_supply - item.circulating_supply}}</td>
+        </tr>
+    </table>
+</div>
+<div *ngIf="error$ | async" class="mt-3">
     <h2>No details to show</h2>
     <h2>{{error$ | async}}</h2>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <button class="btn btn-dark" [routerLink]="['/cryptocurrency-list']">Go back</button>
+    </div>
 </div>

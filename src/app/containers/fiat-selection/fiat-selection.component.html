@@ -1,11 +1,21 @@
-<form [formGroup]="fiatReactiveForm">
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Select fiat currency</label>
-        <select class="browser-default custom-select col-sm-6" formControlName="fiatSelect">
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="CNY">CNY</option>
-          </select>
-        <button class="btn btn-primary col-sm-4" [routerLink]="['/cryptocurrency-list']">Go back</button>
+<div class="row mt-3">
+    <form [formGroup]="fiatReactiveForm" class="w-100">
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label class="col-form-label">Select fiat currency</label>
+            </div>
+            <div class="col-sm-8">
+                <select class="browser-default custom-select" formControlName="fiatSelect">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="CNY">CNY</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <button class="btn btn-dark" [routerLink]="['/cryptocurrency-list']">Go back</button>
     </div>
-</form>
+</div>

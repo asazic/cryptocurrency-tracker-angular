@@ -1,15 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="#" [routerLink]="['/']">Cryptocurrency Tracker</a>
-    <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
+    <button class="navbar-toggler" type="button" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNav()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#" [routerLink]="['/fiat-selection']">
+                <a class="nav-link mr-2" href="#" [routerLink]="['/fiat-selection']">
                     <mat-icon class="example-icon">settings</mat-icon>
+                    <span>Settings</span>
                 </a>
             </li>
         </ul>
         <span class="navbar-text">
-            Selected Fiat Currency: {{currentFiat$ | async}}
+            Selected Fiat Currency: <b>{{currentFiat$ | async}}</b>
         </span>
     </div>
 </nav>
