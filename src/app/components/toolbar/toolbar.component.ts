@@ -18,10 +18,10 @@ export class ToolbarComponent implements OnInit {
 
     public toggleNav(): void {
         const element = document.getElementById('navContent');
-        if(element.classList.contains('show')) {
+        if (element.classList.contains('show')) {
             element.classList.remove('show');
         } else {
-            element.classList.add('show');            
+            element.classList.add('show');
         }
     }
 }

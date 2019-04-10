@@ -17,6 +17,9 @@ export class CryptocurrenciesListComponent implements OnInit {
     constructor(private cryptoListFacade: CryptocurrencyListFacade) { }
 
     public ngOnInit() {
+        this.cryptoListFacade.currentPage$.subscribe((value: number) => {
+            this.currentPage = value;
+        });
         this.refresh();
     }
 

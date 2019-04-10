@@ -28,7 +28,7 @@ export class CryptocurrencyDetailsFacade {
     }
 
     public loadCryptocurrency(id: number) {
-        this.store.dispatch(new CryptocurrencyDetailsStoreActions.LoadRequestAction({ id: id, fiat: this.fiat }));
+        this.store.dispatch(new CryptocurrencyDetailsStoreActions.LoadRequestAction({ id, fiat: this.fiat }));
     }
 
     public getFiatProperties(item: Cryptocurrency, fiat: string = this.fiat) {

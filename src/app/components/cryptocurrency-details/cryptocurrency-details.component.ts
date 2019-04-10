@@ -22,7 +22,7 @@ export class CryptocurrencyDetailsComponent implements OnInit {
     public ngOnInit() {
         this.cryptocurrency$.subscribe((item: Cryptocurrency) => {
             this.item = item;
-        })
+        });
         this.route.params.subscribe((params) => {
             this.id = params.id;
             if (this.id) {

@@ -11,6 +11,8 @@ export class CryptocurrencyListFacade {
     public isLoading$: Observable<boolean> = this.store.pipe(select(RootStoreSelectors.selectIsLoading));
     public pagedCryptocurrencies$: Observable<Cryptocurrency[]> = this.store.pipe(select(CryptocurrencyListStoreSelectors.selectPagedCryptocurrencies));
     public error$: Observable<string> = this.store.pipe(select(RootStoreSelectors.selectError));
+
+    public currentPage$: Observable<number> = this.store.pipe(select(CryptocurrencyListStoreSelectors.selectCurrentPage));
     private fiat: string = 'USD';
 
     constructor(private store: Store<RootStoreState.State>) {
@@ -30,6 +32,6 @@ export class CryptocurrencyListFacade {
     }
 
     public setPage(page: number) {
-        this.store.dispatch(new CryptocurrencyListStoreActions.LoadPaged({ page: page }));
+        this.store.dispatch(new CryptocurrencyListStoreActions.LoadPaged({ page }));
     }
 }

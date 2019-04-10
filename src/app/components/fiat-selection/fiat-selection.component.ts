@@ -18,10 +18,10 @@ export class FiatSelectionComponent implements OnInit {
         this.store.pipe(
             select(FiatCurrencyStoreSelectors.selectFiat)
         ).subscribe((fiat: string) => {
-            this.fiatReactiveForm.controls['fiatSelect'].setValue(fiat);
+            this.fiatReactiveForm.controls.fiatSelect.setValue(fiat);
         });
-        this.fiatReactiveForm.controls['fiatSelect'].valueChanges.subscribe((value: string) => {
+        this.fiatReactiveForm.controls.fiatSelect.valueChanges.subscribe((value: string) => {
             this.store.dispatch(new FiatCurrencyStoreActions.ChangeFiatAction({ fiat: value }));
-        })
+        });
     }
 }

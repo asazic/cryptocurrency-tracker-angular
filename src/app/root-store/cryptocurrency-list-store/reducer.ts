@@ -28,7 +28,7 @@ export function cryptocurrencyListReducer(state = initialState, action: Actions)
             return {
                 ...state,
                 page: action.payload.page
-            }
+            };
         }
         default: {
             return state;

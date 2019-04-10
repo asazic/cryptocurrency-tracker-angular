@@ -16,6 +16,6 @@
     "variable-name": false,
     "one-variable-per-declaration": false,
     "no-inferrable-types": false,
-    "max-line-length": false,
+    "max-line-length": false
   }
 }

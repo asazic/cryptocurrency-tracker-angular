@@ -54,11 +54,11 @@ describe('CryptocurrencyDetailsEffects', () => {
     describe('loadCryptocurrency', () => {
         it('should return an LoadSuccess action, with the Cryptocurrency, on success', () => {
         const action = new LoadRequestAction({ id: 1, fiat: 'USD' });
-        const outcome = new LoadSuccessAction({ cryptocurrency: dummyCurrency1 })
-    
+        const outcome = new LoadSuccessAction({ cryptocurrency: dummyCurrency1 });
+
         actions.stream = hot('--a-', { a: action });
         const expected = cold('--b', { b: outcome });
-    
+
         expect(effects.loadCryptocurrency$).toBeObservable(expected);
       });
 

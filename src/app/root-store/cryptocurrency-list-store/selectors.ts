@@ -9,6 +9,8 @@ export const getError = (state: State): any => state.error;
 
 export const getIsLoading = (state: State): boolean => state.isLoading;
 
+export const getCurrentPage = (state: State): number => state.page;
+
 export const selectCryptocurrencyListState: MemoizedSelector<object, State> = createFeatureSelector<State>('cryptocurrency-list');
 
 export const selectAllCryptocurrencies: (
@@ -19,16 +21,18 @@ export const selectCryptocurrencyListError: MemoizedSelector<object, any> = crea
 
 export const selectCryptocurrencyListIsLoading: MemoizedSelector<object, boolean> = createSelector(selectCryptocurrencyListState, getIsLoading);
 
+export const selectCurrentPage: MemoizedSelector<object, number> = createSelector(selectCryptocurrencyListState, getCurrentPage);
+
 export const getPaged = (state: State): Cryptocurrency[] => {
     const cryptocurrencies = cryptocurrencyListAdapter.getSelectors().selectAll(state);
     const total = cryptocurrencies.length;
-    const pageSize = total/state.maxPages;
-    const startIndex = (state.page*pageSize) - pageSize;
+    const pageSize = total / state.maxPages;
+    const startIndex = (state.page * pageSize) - pageSize;
     const paged = cryptocurrencies.slice(startIndex, startIndex + pageSize);
     return paged;
-}
+};
 
 export const selectPagedCryptocurrencies = createSelector(
     selectCryptocurrencyListState,
     getPaged
-)
+);
