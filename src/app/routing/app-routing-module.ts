@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CryptocurrenciesListComponent } from '../containers/cryptocurrencies-list/cryptocurrencies-list.component';
-import { CryptocurrencyDetailsComponent } from '../containers/cryptocurrency-details/cryptocurrency-details.component';
-import { FiatSelectionComponent } from '../containers/fiat-selection/fiat-selection.component';
+import { CryptocurrenciesListComponent } from '../components/cryptocurrencies-list/cryptocurrencies-list.component';
+import { CryptocurrencyDetailsComponent } from '../components/cryptocurrency-details/cryptocurrency-details.component';
+import { FiatSelectionComponent } from '../components/fiat-selection/fiat-selection.component';
 
 const routes: Routes = [
     {
