@@ -34,7 +34,7 @@ describe('FiatSelectionComponent', () => {
 
     it('should set value EUR to select', () => {
         const compile: HTMLElement = fixture.debugElement.nativeElement;
-        component.fiatReactiveForm.controls['fiatSelect'].setValue('EUR');
+        component.fiatReactiveForm.controls.fiatSelect.setValue('EUR');
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             const select = compile.querySelector('select');
