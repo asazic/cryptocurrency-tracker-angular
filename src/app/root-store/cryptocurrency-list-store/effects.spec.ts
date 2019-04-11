@@ -1,13 +1,13 @@
 import { Actions } from '@ngrx/effects';
 import { empty, Observable } from 'rxjs';
-import { CryptocurrencyDetailsEffects } from './effects';
 import CryptocurrenciesServiceMock from 'src/app/testing/mock-service/cryptocurrencies-service.mock';
 import { TestBed } from '@angular/core/testing';
 import CryptocurrenciesService from 'src/app/services/cryptocurrency.service';
-import { LoadRequestAction, LoadSuccessAction, LoadFailureAction } from './actions';
 import { hot, cold } from 'jasmine-marbles';
-import { dummyCurrency1 } from 'src/app/testing/data/dummy-data';
+import { dummyCurrency1, dummyCurrency2 } from 'src/app/testing/data/dummy-data';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CryptocurrencyListEffects } from './effects';
+import { LoadRequestAction, LoadSuccessAction } from './actions';
 
 export class TestActions extends Actions {
     constructor() {
@@ -23,15 +23,15 @@ export function getActions() {
     return new TestActions();
 }
 
-describe('CryptocurrencyDetailsEffects', () => {
+describe('CryptocurrencyListEffects', () => {
     let actions: TestActions;
-    let effects: CryptocurrencyDetailsEffects;
+    let effects: CryptocurrencyListEffects;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [
-                CryptocurrencyDetailsEffects,
+                CryptocurrencyListEffects,
                 {
                     provide: Actions,
                     useFactory: getActions
@@ -44,23 +44,23 @@ describe('CryptocurrencyDetailsEffects', () => {
         });
 
         actions = TestBed.get(Actions);
-        effects = TestBed.get(CryptocurrencyDetailsEffects);
+        effects = TestBed.get(CryptocurrencyListEffects);
     });
 
     it('should be created', () => {
         expect(effects).toBeTruthy();
     });
 
-    describe('loadCryptocurrency', () => {
+    describe('loadCryptocurrencies$', () => {
 
-        it('should return an LoadSuccess action, with the Cryptocurrency, on success', () => {
-            const action = new LoadRequestAction({ id: 1, fiat: 'USD' });
-            const outcome = new LoadSuccessAction({ cryptocurrency: dummyCurrency1 });
+        it('should return an LoadSuccess action, with cryptocurrencies, on success', () => {
+            const action = new LoadRequestAction({ fiat: 'USD' });
+            const outcome = new LoadSuccessAction({ cryptocurrencies: [dummyCurrency1, dummyCurrency2] });
 
             actions.stream = hot('--a-', { a: action });
             const expected = cold('--b', { b: outcome });
 
-            expect(effects.loadCryptocurrency$).toBeObservable(expected);
+            expect(effects.loadCryptocurrencies$).toBeObservable(expected);
         });
 
     });

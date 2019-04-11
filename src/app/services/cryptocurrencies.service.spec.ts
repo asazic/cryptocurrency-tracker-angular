@@ -3,6 +3,7 @@ import { HttpTestingController, HttpClientTestingModule } from '@angular/common/
 import CryptocurrenciesService from './cryptocurrency.service';
 import Cryptocurrency from '../models/cryptocurrency.model';
 import { dummyCurrency1, dummyCurrency2 } from '../testing/data/dummy-data';
+import { map } from 'rxjs/operators';
 
 
 describe('CryptocurrenciesService', () => {
@@ -20,26 +21,33 @@ describe('CryptocurrenciesService', () => {
         httpMock = injector.get(HttpTestingController);
     });
 
-    describe('#getByFiat', () => {
-        it('should return an Observable<Cryptocurrency[]>', () => {
+    describe('#getListByFiat', () => {
+        it('should return an Observable<IHttpResponse<Cryptocurrency[]>>', () => {
             const dummyCurrencies: Cryptocurrency[] = [dummyCurrency1, dummyCurrency2];
 
-            service.getByFiat('BTC').subscribe(currencies => {
-                expect(currencies.length).toBe(2);
-                expect(currencies).toEqual(dummyCurrencies);
+            service.getListByFiat('BTC').subscribe(response => {
+                expect(response.data.length).toBe(2);
+                expect(response.data).toBe(dummyCurrencies);
             });
 
             const req = httpMock.expectOne(`${service._apiUrl}listings/latest?convert=BTC&limit=100`);
             expect(req.request.method).toBe('GET');
-            req.flush(dummyCurrencies);
+            req.flush({ data: dummyCurrencies });
+            httpMock.verify();
         });
     });
 
-    describe('#getDetailsByFiatAndBitcoin', () => {
-        it('should return an Observable<Cryptocurrency>', () => {
-            service.getDetailsByFiatAndBitcoin(1, 'USD').subscribe(currency => {
-                expect(currency).toEqual(dummyCurrency1);
+    describe('#getDetailsByFiat', () => {
+        it('should return an Observable<IHttpResponse<Cryptocurrency>>', () => {
+
+            service.getDetailsByFiat(1, 'BTC').subscribe(response => {
+                expect(response.data).toBe(dummyCurrency1);
             });
+
+            const req = httpMock.expectOne(`${service._apiUrl}quotes/latest?id=1&convert=BTC`);
+            expect(req.request.method).toBe('GET');
+            req.flush({ data: dummyCurrency1 });
+            httpMock.verify();
         });
     });
 });

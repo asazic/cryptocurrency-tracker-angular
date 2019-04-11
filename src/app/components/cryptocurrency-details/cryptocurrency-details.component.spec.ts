@@ -37,9 +37,11 @@ describe('CryptocurrencyDetailsComponent', () => {
     it('should display rank from data', () => {
         const compile: HTMLElement = fixture.debugElement.nativeElement;
         component.item = dummyCurrency1;
+        fixture.detectChanges();
         fixture.whenRenderingDone().then(() => {
-            const rankElement = compile.querySelector('#rank');
-            expect(rankElement.textContent).toBe(dummyCurrency1.cmc_rank.toString());
+            const firstTr = compile.querySelector('tr');
+            const firstTd = compile.querySelector('td');
+            expect(firstTd.textContent).toBe(dummyCurrency1.cmc_rank.toString());
         });
     });
 

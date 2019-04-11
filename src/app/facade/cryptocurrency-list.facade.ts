@@ -13,7 +13,7 @@ export class CryptocurrencyListFacade {
     public error$: Observable<string> = this.store.pipe(select(RootStoreSelectors.selectError));
 
     public currentPage$: Observable<number> = this.store.pipe(select(CryptocurrencyListStoreSelectors.selectCurrentPage));
-    private fiat: string = 'USD';
+    public fiat: string = 'USD';
 
     constructor(private store: Store<RootStoreState.State>) {
         this.store.pipe(

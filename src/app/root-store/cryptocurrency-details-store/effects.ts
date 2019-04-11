@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { Observable, of as observableOf, forkJoin } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import * as detailsActions from './actions';
 import CryptocurrenciesService from 'src/app/services/cryptocurrency.service';
+import Cryptocurrency from 'src/app/models/cryptocurrency.model';
 
 @Injectable()
 export class CryptocurrencyDetailsEffects {
@@ -15,21 +16,30 @@ export class CryptocurrencyDetailsEffects {
         ofType<detailsActions.LoadRequestAction>(
             detailsActions.ActionTypes.LOAD_REQUEST
         ),
-        // startWith(new listActions.LoadRequestAction()),
-        switchMap(action =>
-            this.dataService
-                .getDetailsByFiatAndBitcoin(action.payload.id, action.payload.fiat)
-                .pipe(
-                    map(
-                        cryptocurrency =>
-                            new detailsActions.LoadSuccessAction({
-                                cryptocurrency
-                            })
-                    ),
-                    catchError(error =>
-                        observableOf(new detailsActions.LoadFailureAction({ error }))
-                    )
+        switchMap((action) => {
+            const byFiatObservable = this.dataService.getDetailsByFiat(action.payload.id, action.payload.fiat);
+            const byBitcoinObservable = this.dataService.getDetailsByFiat(action.payload.id, 'BTC');
+            return forkJoin(byFiatObservable, byBitcoinObservable).pipe(
+                map(([first, second]) => {
+                    const response = first.data[action.payload.id] as Cryptocurrency;
+                    response.quote = {
+                        ...(first.data[action.payload.id] as Cryptocurrency).quote,
+                        ...(second.data[action.payload.id] as Cryptocurrency).quote
+                    };
+                    return response;
+                })
+            ).pipe(
+                map(
+                    cryptocurrency =>
+                        new detailsActions.LoadSuccessAction({
+                            cryptocurrency
+                        })
+                ),
+                catchError(error =>
+                    observableOf(new detailsActions.LoadFailureAction({ error }))
                 )
+            );
+        }
         )
     );
 }

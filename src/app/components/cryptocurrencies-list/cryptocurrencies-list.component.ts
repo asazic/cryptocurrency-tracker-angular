@@ -14,6 +14,7 @@ export class CryptocurrenciesListComponent implements OnInit {
     public error$: Observable<string> = this.cryptoListFacade.error$;
     public isLoading$: Observable<boolean> = this.cryptoListFacade.isLoading$;
     public currentPage = 1;
+    public fiat: string = this.cryptoListFacade.fiat;
     constructor(private cryptoListFacade: CryptocurrencyListFacade) { }
 
     public ngOnInit() {

@@ -5,6 +5,8 @@ import { dummyCurrency1, dummyCurrency2 } from 'src/app/testing/data/dummy-data'
 import { RouterTestingModule } from '@angular/router/testing';
 import { RootStoreModule } from 'src/app/root-store';
 import { CryptocurrencyListFacade } from 'src/app/facade/cryptocurrency-list.facade';
+import CryptocurrenciesService from 'src/app/services/cryptocurrency.service';
+import CryptocurrenciesServiceMock from 'src/app/testing/mock-service/cryptocurrencies-service.mock';
 
 describe('CryptocurrenciesListComponent', () => {
     let component: CryptocurrenciesListComponent;
@@ -17,7 +19,12 @@ describe('CryptocurrenciesListComponent', () => {
                 RouterTestingModule,
                 RootStoreModule
             ],
-            providers: [CryptocurrencyListFacade],
+            providers: [
+                CryptocurrencyListFacade,
+                {
+                    provide: CryptocurrenciesService, useClass: CryptocurrenciesServiceMock
+                }
+            ],
             declarations: [CryptocurrenciesListComponent]
         }).compileComponents();
     }));
@@ -34,23 +41,27 @@ describe('CryptocurrenciesListComponent', () => {
     });
 
     it('should display data', fakeAsync(() => {
-        const compile: HTMLElement = fixture.debugElement.nativeElement;
-        listFacade.pagedCryptocurrencies$ = of([dummyCurrency1, dummyCurrency2]);
+        component.cryptocurrencies$ = of([dummyCurrency2, dummyCurrency1]);
         tick();
-        fixture.whenRenderingDone().then(() => {
-            const trElements = compile.querySelectorAll('tr');
-            expect(trElements.length).toBe(2);
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+            const compile: HTMLElement = fixture.debugElement.nativeElement;
+            const tbody = compile.querySelector('tbody');
+            const trs = tbody.querySelectorAll('tr');
+            expect(trs.length).toBe(2);
         });
     }));
 
-    it('should display dummycurrency1 as first row', fakeAsync(() => {
-        const compile: HTMLElement = fixture.debugElement.nativeElement;
-        listFacade.pagedCryptocurrencies$ = of([dummyCurrency1, dummyCurrency2]);
+    it('should display dummycurrency2 as first row', fakeAsync(() => {
+        component.cryptocurrencies$ = of([dummyCurrency2, dummyCurrency1]);
         tick();
+        fixture.detectChanges();
         fixture.whenStable().then(() => {
-            const trElement = compile.querySelector('tr');
-            const firstTd = trElement.querySelector('td');
-            expect(firstTd.textContent).toBe(dummyCurrency1.cmc_rank.toString());
+            const compile: HTMLElement = fixture.debugElement.nativeElement;
+            const tbody = compile.querySelector('tbody');
+            const tr = tbody.querySelector('tr');
+            const firstTd = tr.querySelector('td');
+            expect(firstTd.textContent).toBe(dummyCurrency2.cmc_rank.toString());
         });
     }));
 
